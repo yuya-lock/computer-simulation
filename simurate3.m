@@ -19,6 +19,6 @@ for i = 1:N-1
     end
 end
 
-eyediagram(pattern2 .^ 2, 64)
+eyediagram(pattern2.^2, 64)
 ylabel('Amplitude')
 ylim([-0.2, 1.2])

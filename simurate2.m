@@ -4,6 +4,7 @@ pattern1 = prbs(O,N);
 
 ts = 25;
 data_per_ts = 32;
+data_count = N * data_per_ts;
 
 for i = 1:N-1
     for j = 1:data_per_ts
@@ -19,9 +20,9 @@ for i = 1:N-1
     end
 end
 
-time_length = N * (ts * 10^(-12));
-tmp = time_length/4064;
-t = (0:4063)*(tmp);
+time_max = N * (ts * 10^(-12));
+t = (0:data_count-1) * (time_max / (N * data_per_ts));
 plot(t, pattern2)
+
 ylim([-0.2, 1.2])
 xlabel('時間 [s]')
