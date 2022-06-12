@@ -23,7 +23,6 @@ end
 y = fft(pattern2);
 power = fftshift(10 * log10(abs(y) / data_count));
 
-center_freq = data_count / 2 + 1;
 freq_diff = (0:data_count-1) ./ data_per_ts - (N/2);
 
 plot(freq_diff, power)

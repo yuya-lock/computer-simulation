@@ -20,9 +20,11 @@ for i = 1:N-1
     end
 end
 
-y = fft(pattern2);
+y = fft(pattern2.^2);
 power = fftshift(10 * log10(abs(y) / data_count));
 
 freq_diff = (0:data_count-1) ./ data_per_ts - (N/2);
 
 plot(freq_diff, power)
+ylim([-60, 0])
+xlabel('f-f0 [GHz]')
