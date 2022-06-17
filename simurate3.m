@@ -2,8 +2,9 @@ O = 7;
 N = 2^O-1;
 pattern1 = prbs(O,N);
 
-ts = 400;
+ts = 25 * 10^(-12);
 data_per_ts = 32;
+data_count = N * data_per_ts;
 
 for i = 1:N-1
     for j = 1:data_per_ts
