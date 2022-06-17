@@ -2,7 +2,7 @@ O = 7;
 N = 2^O-1;
 pattern1 = prbs(O,N);
 
-ts = 25;
+ts = 25 * 10^(-12);
 data_per_ts = 32;
 data_count = N * data_per_ts;
 
@@ -20,8 +20,8 @@ for i = 1:N-1
     end
 end
 
-time_max = N * (ts * 10^(-12));
-t = (0:data_count-1) * (time_max / (N * data_per_ts));
+time_max = N * ts;
+t = (0:data_count-1) * (time_max / data_count);
 plot(t, pattern2)
 
 ylim([-0.2, 1.2])
