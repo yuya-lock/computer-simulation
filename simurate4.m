@@ -2,7 +2,7 @@ O = 7;
 N = 2^O-1;
 pattern1 = prbs(O,N);
 
-ts = 25;
+ts = 25 * 10^(-12);
 data_per_ts = 32;
 data_count = N * data_per_ts;
 
@@ -23,6 +23,7 @@ end
 y = fft(pattern2);
 power = fftshift(10 * log10(abs(y) / data_count));
 
-freq_diff = (0:data_count-1) ./ data_per_ts - (N/2);
+time_min = ts / data_per_ts;
+freq_diff = ((0:data_count-1) - data_count/2) * (1 / time_min / data_count) * 10 ^ (-9);
 
 plot(freq_diff, power)
