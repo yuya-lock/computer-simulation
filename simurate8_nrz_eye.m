@@ -20,17 +20,23 @@ for i = 1:N-1
     end
 end
 
-y = fft(pattern2.^2);
-power = fftshift(10 * log10(abs(y) / data_count));
-
-center_wavelength = 1550;
+center_wavelength = 1550 * 10 ^ (-9);
 c = 3 * 10 ^ 8;
+d = 20 * 10 ^ (-6);
+l = 3 * 10 ^ 3;
+
+b2 = -((d * center_wavelength ^ 2) / (2 * pi * c));
 center_freq = c / center_wavelength;
 time_min = ts / data_per_ts;
-freq_diff = ((0:data_count-1) - data_count/2) * (1 / time_min / data_count) * 10 ^ (-9);
-freq = freq_diff + center_freq;
-wavelength = c ./ freq;
+freq = (0:data_count-1) * (1 / time_min / data_count) + center_freq;
+freq(data_count/2+1:data_count) = freq(data_count/2+1:data_count) - (data_count * (1 / time_min / data_count));
+freq_diff = freq - center_freq;
+phase_diff = -(b2 * l * (2 * pi * (freq - center_freq)) .^ 2) / 2;
 
-plot(wavelength, power)
-ylim([-60, 0])
-xlabel('波長 [nm]')
+y = fft(pattern2);
+power = y .* exp(-j * (phase_diff));
+pattern3 = ifft(power);
+
+eyediagram(pattern3.^2, 64)
+ylabel('Amplitude')
+ylim([-1.5, 1.5])
