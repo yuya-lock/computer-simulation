@@ -2,7 +2,7 @@ O = 7;
 N = 2^O-1;
 pattern1 = prbs(O,N);
 
-ts = 25;
+ts = 25 * 10^(-12);
 data_per_ts = 32;
 data_count = N * data_per_ts;
 
@@ -26,7 +26,9 @@ power = fftshift(10 * log10(abs(y) / data_count));
 center_wavelength = 1550;
 c = 3 * 10 ^ 8;
 center_freq = c / center_wavelength;
-freq = (0:data_count-1) ./ data_per_ts - (N/2) + center_freq;
+time_min = ts / data_per_ts;
+freq_diff = ((0:data_count-1) - data_count/2) * (1 / time_min / data_count) * 10 ^ (-9);
+freq = freq_diff + center_freq;
 wavelength = c ./ freq;
 
 plot(wavelength, power)
